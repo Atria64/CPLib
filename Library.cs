@@ -15,10 +15,12 @@ namespace Atcoder
         //いつもの
         readonly static long mod = 1000000000 + 7;
 
-        /*
-         * Gcd (Gross Common Dividing) 最大公約数
-         * 
-        */
+        /// <summary>
+        /// Gcd (Gross Common Dividing) 最大公約数
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static long Gcd(long a,long b)
         {
             var v = new[] { a, b };
@@ -26,20 +28,25 @@ namespace Atcoder
             return v[0];
         }
 
-        /*
-         * Lcm (Last Common Multiple) 最小公倍数 
-         * Gcdライブラリの仕様が前提
-        */
-
+        /// <summary>
+        /// Lcm (Last Common Multiple) 最小公倍数 
+        /// Gcdライブラリの仕様が前提
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
         static long Lcm (long a,long b)
         {
             return a / Gcd(a, b) * b;
         }
 
-        /*
-         * 二分探索
-         * 
-        */
+        /// <summary>
+        /// 二部探索を行う関数
+        /// 計算量はO(logn)
+        /// </summary>
+        /// <param name="a">ソート済みの配列</param>
+        /// <param name="target">探索対象</param>
+        /// <returns></returns>
         static bool BinarySearch(long[] a, long target)
         {
             var left = 0;
@@ -69,25 +76,14 @@ namespace Atcoder
         }
 
         /// <summary>
-        /// nCrを求める関数
-        /// 計算量は多分O(n)
+        /// 階乗を求める再帰関数
         /// </summary>
-        /// <param name="n">nCrのnの部分</param>
-        /// <param name="r">nCrのrの部分</param>
+        /// <param name="x">x!を返す</param>
         /// <returns></returns>
-        static long combination(long n,long r)
+        static long Factorial(long x)
         {
-            if (n < r) return -1;
-            long ans = 1;
-            for (int i = n; i > n-r; i--)
-            {
-                ans *= i;
-            }
-            for (int i = 2; i <= r; i++)
-            {
-                ans /= i;
-            }
-            return ans;
+            if (x == 1) return 1;
+            return x * Factorial(x - 1);
         }
 
         /// <summary>
@@ -107,7 +103,7 @@ namespace Atcoder
                 return false;
             }
             int i = 3;
-            while (i <= Math.Sqrt(n))
+            while (i<= Math.Sqrt(n))
             {
                 if (n % i == 0)
                 {
@@ -116,6 +112,29 @@ namespace Atcoder
                 i += 2;
             }
             return true;
+        }
+
+        /// <summary>
+        /// 素因数分解を行う関数
+        /// 計算量は多分O(√n)
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        static IEnumerable<long> PrimeFactor(long n)
+        {
+            int i = 2;
+            long tmp = n;
+
+            while (i <= Math.Sqrt(n))
+            {
+                if (tmp % i == 0)
+                {
+                    tmp /= i;
+                    yield return i;
+                }
+                else i++;
+            }
+            if (tmp != 1) yield return tmp;
         }
     }
 
