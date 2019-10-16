@@ -1,0 +1,217 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Runtime.CompilerServices;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Atcoder
+{
+    class Library
+    {
+        //自作ライブラリ集
+        //使うときは適宜ここからコピペすること
+
+        //いつもの
+        readonly static long mod = 1000000000 + 7;
+
+        /*
+         * Gcd (Gross Common Dividing) 最大公約数
+         * 
+        */
+        static long Gcd(long a,long b)
+        {
+            var v = new[] { a, b };
+            while(v[1] != 0) { v = new[] { v[1], v[0] % v[1] }; }
+            return v[0];
+        }
+
+        /*
+         * Lcm (Last Common Multiple) 最小公倍数 
+         * Gcdライブラリの仕様が前提
+        */
+
+        static long Lcm (long a,long b)
+        {
+            return a / Gcd(a, b) * b;
+        }
+
+        /*
+         * 二分探索
+         * 
+        */
+        static bool BinarySearch(long[] a, long target)
+        {
+            var left = 0;
+            var right = a.Length;
+            while (left < right)
+            {
+                var mid = (left + right) / 2;
+                if (a[mid] == target) return true;
+                if (a[mid] > target)
+                {
+                    right = mid;
+                }
+                else left = mid + 1;
+            }
+            return false;
+        }
+        /// <summary>
+         /// 各桁の和を求める関数
+         /// </summary>
+         /// <param name="x"></param>
+         /// <returns></returns>
+        static long Cal(long x)
+        {
+            if (x < 10) return x;
+
+            return Cal(x / 10) + x % 10;
+        }
+
+        /// <summary>
+        /// nCrを求める関数
+        /// 計算量は多分O(n)
+        /// </summary>
+        /// <param name="n">nCrのnの部分</param>
+        /// <param name="r">nCrのrの部分</param>
+        /// <returns></returns>
+        static long combination(long n,long r)
+        {
+            if (n < r) return -1;
+            long ans = 1;
+            for (int i = n; i > n-r; i--)
+            {
+                ans *= i;
+            }
+            for (int i = 2; i <= r; i++)
+            {
+                ans /= i;
+            }
+            return ans;
+        }
+
+        /// <summary>
+        /// 素数判定を行う関数
+        /// 計算量はO(n)
+        /// </summary>
+        /// <param name="n">対象変数</param>
+        /// <returns></returns>
+        static bool Is_Prime(long n)
+        {
+            if (n == 2)
+            {
+                return true;
+            }
+            if (n < 2 || n % 2 == 0)
+            {
+                return false;
+            }
+            int i = 3;
+            while (i <= Math.Sqrt(n))
+            {
+                if (n % i == 0)
+                {
+                    return false;
+                }
+                i += 2;
+            }
+            return true;
+        }
+    }
+
+    /// <summary>
+    /// 優先度付きキュー を表す。
+    /// System.Runtime.CompilerServicesが必要
+    /// </summary>
+    /// <typeparam name="T">キューの型</typeparam>
+    public class PriorityQueue<T> where T : IComparable<T>
+    {
+        public bool Any() => Count > 0;
+        public int Count { get; private set; }
+        private bool Descendance;
+        private T[] data = new T[65536];
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public PriorityQueue(bool descendance = false)
+        {
+            Descendance = descendance;
+        }
+
+        /// <summary>
+        /// キューの最小 (<see cref="Descendance"/> が <see cref="true"/> の場合は最大) の要素を取得します。
+        /// </summary>
+        public T Top
+        {
+            [MethodImpl(MethodImplOptions.AggressiveInlining)]
+            get
+            {
+                ValidateNonEmpty();
+                return data[1];
+            }
+        }
+
+        /// <summary>
+        /// キューの最小 (<see cref="Descendance"/> が <see cref="true"/> の場合は最大) の要素を削除して返す。
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public T Pop()
+        {
+            var top = Top;
+            var elem = data[Count--];
+            int index = 1;
+            while (true)
+            {
+                if ((index << 1) >= Count)
+                {
+                    if (index << 1 > Count) break;
+                    if (elem.CompareTo(data[index << 1]) > 0 ^ Descendance) data[index] = data[index <<= 1];
+                    else break;
+                }
+                else
+                {
+                    var nextIndex = data[index << 1].CompareTo(data[(index << 1) + 1]) <= 0 ^ Descendance
+                        ? (index << 1)
+                        : (index << 1) + 1;
+                    if (elem.CompareTo(data[nextIndex]) > 0 ^ Descendance) data[index] = data[index = nextIndex];
+                    else break;
+                }
+            }
+
+            data[index] = elem;
+            return top;
+        }
+
+        /// <summary>
+        /// キューに要素を追加する。
+        /// </summary>
+        /// <param name="value">追加する要素</param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Push(T value)
+        {
+            int index = ++Count;
+            if (data.Length == Count) Extend(data.Length * 2);
+            while ((index >> 1) != 0)
+            {
+                if (data[index >> 1].CompareTo(value) > 0 ^ Descendance) data[index] = data[index >>= 1];
+                else break;
+            }
+
+            data[index] = value;
+        }
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        private void Extend(int newSize)
+        {
+            T[] newDatas = new T[newSize];
+            data.CopyTo(newDatas, 0);
+            data = newDatas;
+        }
+
+        private void ValidateNonEmpty()
+        {
+            if (Count == 0) throw new Exception();
+        }
+    }
+
+    
+}
