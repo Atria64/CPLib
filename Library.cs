@@ -67,9 +67,9 @@ namespace Atcoder
         /// <summary>
         /// 各桁の和を求める関数
         /// </summary>
-        /// <param name="x"></param>
+        /// <param name="x">対象となる数</param>
         /// <returns></returns>
-        static long Cal(long x)
+        static long EachDigitSum(long x)
         {
             if (x < 10) return x;
 
