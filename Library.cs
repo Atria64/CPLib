@@ -161,13 +161,36 @@ namespace Atcoder
         }
 
         /// <summary>
+        /// 交換ソートを行う関数
+        /// 計算量はO(n^2)で非常に低速、安定な、内部ソート。
+        /// Swap関数を用いる
+        /// </summary>
+        /// <param name="array"></param>
+        static void BubbleSort(long[] array)
+        {
+            bool flug = true;
+            while (flug)
+            {
+                flug = false;
+                for (int i = 0; i < array.Length - 1; i++)
+                {
+                    if (array[i] > array[i + 1])
+                    {
+                        Swap(ref array[i], ref array[i + 1]);
+                        flug = true;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
         /// 選択ソートを行う関数
-        /// 計算量はO(n^2)で非常に低速
+        /// 計算量はO(n^2)で非常に低速、安定な、内部ソート。
         /// Swap関数を用いる
         /// </summary>
         /// <typeparam name="T"></typeparam>
         /// <param name="array"></param>
-        public static void SelectionSort<T>(T[] array) where T : IComparable<T>
+        static void SelectionSort<T>(T[] array) where T : IComparable<T>
         {
             for (int i = 0; i < array.Length - 1; i++)
             {
@@ -191,7 +214,7 @@ namespace Atcoder
         /// <typeparam name="T"></typeparam>
         /// <param name="a"></param>
         /// <param name="b"></param>
-        public static void Swap<T>(ref T a, ref T b)
+        static void Swap<T>(ref T a, ref T b)
         {
             var tmp = a;
             a = b;
