@@ -63,11 +63,12 @@ namespace Atcoder
             }
             return false;
         }
+
         /// <summary>
-         /// 各桁の和を求める関数
-         /// </summary>
-         /// <param name="x"></param>
-         /// <returns></returns>
+        /// 各桁の和を求める関数
+        /// </summary>
+        /// <param name="x"></param>
+        /// <returns></returns>
         static long Cal(long x)
         {
             if (x < 10) return x;
@@ -88,7 +89,7 @@ namespace Atcoder
 
         /// <summary>
         /// 素数判定を行う関数
-        /// 計算量はO(n)
+        /// 計算量はO(√n)
         /// </summary>
         /// <param name="n">対象変数</param>
         /// <returns></returns>
@@ -135,6 +136,28 @@ namespace Atcoder
                 else i++;
             }
             if (tmp != 1) yield return tmp;
+        }
+
+        /// <summary>
+        /// nCrを求める関数
+        /// 計算量は多分O(n)
+        /// </summary>
+        /// <param name="n">nCrのnの部分</param>
+        /// <param name="r">nCrのrの部分</param>
+        /// <returns></returns>
+        static long Combination(long n, long r)
+        {
+            if (n < r) return -1;
+            long ans = 1;
+            for (long i = n; i > n - r; i--)
+            {
+                ans *= i;
+            }
+            for (long i = 2; i <= r; i++)
+            {
+                ans /= i;
+            }
+            return ans;
         }
     }
 
