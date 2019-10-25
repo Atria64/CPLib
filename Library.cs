@@ -159,6 +159,44 @@ namespace Atcoder
             }
             return ans;
         }
+
+        /// <summary>
+        /// 選択ソートを行う関数
+        /// 計算量はO(n^2)で非常に低速
+        /// Swap関数を用いる
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="array"></param>
+        public static void SelectionSort<T>(T[] array) where T : IComparable<T>
+        {
+            for (int i = 0; i < array.Length - 1; i++)
+            {
+                int min = i;    // 最小値のインデックス保持用
+                                // このループが終われば min には最小値のインデックスが入ることになる
+                for (int j = i + 1; j < array.Length; j++)
+                {
+                    if (array[min].CompareTo(array[j]) > 0)
+                    {
+                        min = j;
+                    }
+                }
+                // 見つかった最小値の値を交換する
+                Swap(ref array[min], ref array[i]);
+            }
+        }
+
+        /// <summary>
+        /// aとbをスワップさせる関数
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        public static void Swap<T>(ref T a, ref T b)
+        {
+            var tmp = a;
+            a = b;
+            b = tmp;
+        }
     }
 
     /// <summary>
