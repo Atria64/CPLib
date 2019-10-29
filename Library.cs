@@ -41,7 +41,7 @@ namespace Atcoder
         }
 
         /// <summary>
-        /// 二部探索を行う関数
+        /// 二分探索を行う関数
         /// 計算量はO(logn)
         /// </summary>
         /// <param name="a">ソート済みの配列</param>
