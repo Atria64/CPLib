@@ -41,7 +41,8 @@ namespace Atcoder
         }
 
         /// <summary>
-        /// 二分探索を行う関数
+        /// 二分探索を行う関数-雛形
+        /// C#の場合System.Collections.Generic.BinarySerch()がある
         /// 計算量はO(logn)
         /// </summary>
         /// <param name="a">ソート済みの配列</param>
@@ -63,6 +64,49 @@ namespace Atcoder
             }
             return false;
         }
+
+        /// <summary>
+        /// 二分探索を用いて
+        /// 指定された要素以上の値が現れる最初のindexを取得する関数
+        /// 計算量はO(logn)
+        /// </summary>
+        /// <param name="a">昇順ソート済みの配列</param>
+        /// <param name="target">探索対象</param>
+        /// <returns></returns>
+        static long LowerBound(long[] a, long target)
+        {
+            var left = 0;
+            var right = a.Length - 1;
+            while (left <= right)
+            {
+                var mid = left + (right - left) / 2;
+                if (a[mid] < target) left = mid + 1;
+                else right = mid - 1;
+            }
+            return left;
+        }
+
+        /// <summary>
+        /// 二分探索を用いて
+        /// 指定された要素より大きい値が現れる最小のindexを取得する関数
+        /// 計算量はO(logn)
+        /// </summary>
+        /// <param name="a">昇順ソート済みの配列</param>
+        /// <param name="target">探索対象</param>
+        /// <returns></returns>
+        static long UpperBound(long[] a, long target)
+        {
+            var left = 0;
+            var right = a.Length - 1;
+            while (left <= right)
+            {
+                var mid = left + (right - left) / 2;
+                if (a[mid] <= target) left = mid + 1;
+                else right = mid - 1;
+            }
+            return left;
+        }
+
 
         /// <summary>
         /// 各桁の和を求める関数
