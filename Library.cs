@@ -15,6 +15,47 @@ namespace Atcoder
         //いつもの
         readonly static long mod = 1000000000 + 7;
 
+
+        /// <summary>
+        /// 二項係数(nCk mod. p)
+        /// 上のmodが必要
+        /// </summary>
+        ///////////////////////////////////////////////////////
+        static long MAX = 10000000;
+        static long[] fac = new long[MAX];
+        static long[] finv = new long[MAX];
+        static long[] inv = new long[MAX];
+
+        /// <summary>
+        /// 初期化してテーブルを作成する
+        /// </summary>
+        static void COMinit()
+        {
+            fac[0] = fac[1] = 1;
+            finv[0] = finv[1] = 1;
+            inv[1] = 1;
+            for (int i = 2; i < MAX; i++)
+            {
+                fac[i] = fac[i - 1] * i % mod;
+                inv[i] = mod - inv[mod % i] * (mod / i) % mod;
+                finv[i] = finv[i - 1] * inv[i] % mod;
+            }
+        }
+        /// <summary>
+        /// テーブルを使用して計算する
+        /// </summary>
+        /// <param name="n"></param>
+        /// <param name="k"></param>
+        /// <returns></returns>
+        static long Combination(int n, int k)
+        {
+            if (n < k) return 0;
+            if (n < 0 || k < 0) return 0;
+            return fac[n] * (finv[k] * finv[n - k] % mod) % mod;
+        }
+        /////////////////////////////////////////////////////////
+        
+
         /// <summary>
         /// Gcd (Gross Common Dividing) 最大公約数
         /// </summary>
@@ -185,6 +226,7 @@ namespace Atcoder
         /// <summary>
         /// nCrを求める関数
         /// 計算量は多分O(n)
+        /// modの絡む計算には使えない。
         /// </summary>
         /// <param name="n">nCrのnの部分</param>
         /// <param name="r">nCrのrの部分</param>
@@ -263,6 +305,16 @@ namespace Atcoder
             var tmp = a;
             a = b;
             b = tmp;
+        }
+
+        /// <summary>
+        /// 桁数を求める関数
+        /// </summary>
+        /// <param name="a"></param>
+        /// <returns></returns>
+        static int Digits(long a)
+        {
+            return (a == 0) ? 1 : ((int)Log10(a) + 1);
         }
     }
 
@@ -360,5 +412,43 @@ namespace Atcoder
         }
     }
 
-    
+
+    /// <summary>
+    /// 順列組み合わせを生成する静的クラス
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    static class Permutation<T>
+    {
+        private static void Search(List<T[]> perms, Stack<T> stack, T[] a)
+        {
+            int N = a.Length;
+            if (N == 0)
+            {
+                perms.Add(stack.Reverse().ToArray());
+            }
+            else
+            {
+                var b = new T[N - 1];
+                Array.Copy(a, 1, b, 0, N - 1);
+                for (int i = 0; i < a.Length; ++i)
+                {
+                    stack.Push(a[i]);
+                    Search(perms, stack, b);
+                    if (i < b.Length) { b[i] = a[i]; }
+                    stack.Pop();
+                }
+            }
+        }
+        /// <summary>
+        /// 配列を与えるとList<T>で順列組み合わせを返す。
+        /// </summary>
+        /// <param name="src"></param>
+        /// <returns></returns>
+        public static IEnumerable<T[]> Make(IEnumerable<T> src)
+        {
+            var perms = new List<T[]>();
+            Search(perms, new Stack<T>(), src.ToArray());
+            return perms;
+        }
+    }
 }
