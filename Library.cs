@@ -316,6 +316,18 @@ namespace Atcoder
         {
             return (a == 0) ? 1 : ((int)Log10(a) + 1);
         }
+
+        /// <summary>
+        /// 文字列をソートします
+        /// </summary>
+        /// <param name="s"></param>
+        /// <returns></returns>
+        static string SortString(string s)
+        {
+            var tmp = s.ToCharArray();
+            Array.Sort(tmp);
+            return string.Concat(tmp);
+        }
     }
 
     /// <summary>
