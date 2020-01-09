@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Gcd</Title>
+      <Shortcut>Gcd</Shortcut>
+      <Description>Gcd (Gross Common Dividing) 最大公約数</Description>
+      <Author>Atria</Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="false"></Literal>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[/// <summary>
+/// Gcd (Gross Common Dividing) 最大公約数
+/// </summary>
+/// <param name="a"></param>
+/// <param name="b"></param>
+/// <returns></returns>
+static long Gcd(long a, long b)
+{
+    var v = new[] { a, b };
+    while (v[1] != 0) { v = new[] { v[1], v[0] % v[1] }; }
+    return v[0];
+}$end$]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

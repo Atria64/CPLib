@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>Is_Prime</Title>
+      <Shortcut>IsPrime</Shortcut>
+      <Description>素数判定を行う関数</Description>
+      <Author>Atria</Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="false"></Literal>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[/// <summary>
+/// 素数判定を行う関数
+/// 計算量はO(√n)
+/// </summary>
+/// <param name="n">対象変数</param>
+/// <returns></returns>
+static bool Is_Prime(long n)
+{
+    if (n == 2)
+    {
+        return true;
+    }
+    if (n < 2 || n % 2 == 0)
+    {
+        return false;
+    }
+    int i = 3;
+    while (i <= Math.Sqrt(n))
+    {
+        if (n % i == 0)
+        {
+            return false;
+        }
+        i += 2;
+    }
+    return true;
+}$end$]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>

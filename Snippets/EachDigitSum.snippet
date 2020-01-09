@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
+  <CodeSnippet Format="1.0.0">
+    <Header>
+      <Title>EachDigitSum</Title>
+      <Shortcut>EachDigitSum</Shortcut>
+      <Description>各桁の和を求める関数</Description>
+      <Author>Atria</Author>
+    </Header>
+    <Snippet>
+      <Declarations>
+        <Literal Editable="false"></Literal>
+      </Declarations>
+      <Code Language="csharp"><![CDATA[/// <summary>
+/// 各桁の和を求める関数
+/// </summary>
+/// <param name="x">対象となる数</param>
+/// <returns></returns>
+static long EachDigitSum(long x)
+{
+    if (x < 10) return x;
+
+    return EachDigitSum(x / 10) + x % 10;
+}$end$]]></Code>
+    </Snippet>
+  </CodeSnippet>
+</CodeSnippets>
