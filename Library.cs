@@ -154,11 +154,16 @@ namespace Atcoder
         /// </summary>
         /// <param name="x">対象となる数</param>
         /// <returns></returns>
-        static long EachDigitSum(long x)
+        static int EachDigitSum(long x)
         {
-            if (x < 10) return x;
+            int res = 0;
+            while (x > 0)
+            {
+                res += (int)(x % 10);
+                x /= 10;
+            }
 
-            return EachDigitSum(x / 10) + x % 10;
+            return res;
         }
 
         /// <summary>
@@ -166,10 +171,11 @@ namespace Atcoder
         /// </summary>
         /// <param name="x">x!を返す</param>
         /// <returns></returns>
-        static long Factorial(long x)
+        static long Factorial(int x)
         {
-            if (x == 1) return 1;
-            return x * Factorial(x - 1);
+            long res = 1;
+            for (int i = 2; i <= x; i++) res *= i;
+            return res;
         }
 
         /// <summary>
@@ -314,7 +320,16 @@ namespace Atcoder
         /// <returns></returns>
         static int Digits(long a)
         {
-            return (a == 0) ? 1 : ((int)Log10(a) + 1);
+            if (a == 0) return 0;
+            
+            int ret = 0;
+            while (a > 0)
+            {
+                a /= 10;
+                ret++;
+            }
+
+            return ret;
         }
 
         /// <summary>
