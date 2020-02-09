@@ -2,9 +2,9 @@
 <CodeSnippets  xmlns="http://schemas.microsoft.com/VisualStudio/2005/CodeSnippet">
   <CodeSnippet Format="1.0.0">
     <Header>
-      <Title>Is_Prime</Title>
-      <Shortcut>IsPrime</Shortcut>
-      <Description>素数判定を行う関数</Description>
+      <Title>PrimeFactor</Title>
+      <Shortcut>PrimeFactor</Shortcut>
+      <Description>素因数分解を行う関数</Description>
       <Author>Atria</Author>
     </Header>
     <Snippet>
@@ -12,31 +12,26 @@
         <Literal Editable="false"></Literal>
       </Declarations>
       <Code Language="csharp"><![CDATA[/// <summary>
-/// 素数判定を行う関数
-/// 計算量はO(√n)
+/// 素因数分解を行う関数
+/// 計算量は多分O(√n)
 /// </summary>
-/// <param name="n">対象変数</param>
+/// <param name="n"></param>
 /// <returns></returns>
-static bool Is_Prime(long n)
+static IEnumerable<long> PrimeFactor(long n)
 {
-    if (n == 2)
-    {
-        return true;
-    }
-    if (n < 2 || n % 2 == 0)
-    {
-        return false;
-    }
-    int i = 3;
+    int i = 2;
+    long tmp = n;
+
     while (i <= Math.Sqrt(n))
     {
-        if (n % i == 0)
+        if (tmp % i == 0)
         {
-            return false;
+            tmp /= i;
+            yield return i;
         }
-        i += 2;
+        else i++;
     }
-    return true;
+    if (tmp != 1) yield return tmp;
 }$end$]]></Code>
     </Snippet>
   </CodeSnippet>

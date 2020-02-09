@@ -343,6 +343,55 @@ namespace Atcoder
             Array.Sort(tmp);
             return string.Concat(tmp);
         }
+
+        /// <summary>
+        /// 10進数からm進数に変換します
+        /// </summary>
+        /// <param name="n">変換元</param>
+        /// <param name="m">m進数へ変換</param>
+        /// <returns></returns>
+        static string Func(int n, int m)
+        {
+            var sb = new StringBuilder();
+            while (n > 0)
+            {
+                sb.Append(n % m);
+                n /= m;
+            }
+            return new string(sb.ToString().Reverse().ToArray());
+        }
+
+        /// <summary>
+        /// a より b の方が小さかったら、a の値を b の値に置き換える
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        static bool ChMin(ref long a, long b)
+        {
+            if (a > b)
+            {
+                a = b;
+                return true;
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// a より b の方が大きかったら、a の値を b の値に置き換える
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        static bool ChMax(ref long a, long b)
+        {
+            if (a < b)
+            {
+                a = b;
+                return true;
+            }
+            return false;
+        }
     }
 
     /// <summary>
