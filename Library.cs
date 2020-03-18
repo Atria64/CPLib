@@ -148,6 +148,22 @@ namespace Atcoder
             return left;
         }
 
+        /// <summary>
+        /// 等確率の期待値を求める関数
+        /// サイコロとかで頻出
+        /// </summary>
+        /// <param name="x">1以上の整数</param>
+        /// <returns></returns>
+        static double EqualExpectedValue(int x)
+        {
+            if (x <= 0) throw new FormatException("1以上の整数しか受け付けられません");
+            double ans = 0;
+            for (double i = 1; i <= x; i++)
+            {
+                ans += i / x;
+            }
+            return ans;
+        }
 
         /// <summary>
         /// 各桁の和を求める関数
