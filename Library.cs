@@ -15,6 +15,16 @@ namespace Atcoder
         //いつもの
         readonly static long mod = 1000000000 + 7;
 
+        /// <summary>
+        /// 正剰余
+        /// </summary>
+        /// <param name="i"></param>
+        /// <param name="j"></param>
+        /// <returns></returns>
+        static long PositiveMod(long i, long j)
+        {
+            return (i % j) < 0 ? (i % j) + 0 + (j < 0 ? -j : j) : (i % j + 0);
+        }
 
         /// <summary>
         /// 二項係数(nCk mod. p)
